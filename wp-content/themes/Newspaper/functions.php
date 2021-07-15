@@ -448,3 +448,16 @@ function td_filter_youtube_embed( $block_content, $block ) {
 
   return $block_content;
 }
+
+
+function create_shortcode_box()
+{
+    return '
+<input type="text" name="url">
+<input type="submit" value="Shorten Link">
+';
+}
+
+add_shortcode('box', 'create_shortcode_box');
+
+
