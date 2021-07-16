@@ -38,6 +38,5 @@ if ( has_action( 'tdc_footer' ) ) {
 </div><!--close td-outer-wrap-->
 
 <?php wp_footer(); ?>
-
 </body>
 </html>

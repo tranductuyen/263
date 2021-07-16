@@ -63,7 +63,7 @@ function wp_classic_get_shortlink( $link, $id, $context ) {
 	{
 		$id = get_queried_object_id();
 	}
-	return home_url( 'p/' . $id );
+	return home_url( 'p/' . $id. 'assadsd' );
 }
 
 add_filter( 'get_shortlink', 'wp_classic_get_shortlink', 10, 3 );
