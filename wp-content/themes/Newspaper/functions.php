@@ -466,18 +466,94 @@ function td_filter_youtube_embed( $block_content, $block ) {
 //    }
 //}
 
-add_action ('wpcf7_before_send_mail', 'dd_before_send_mail');
-function dd_before_send_mail($contact_form){
+
+
+//edit response after submit contact form 7
+
+add_action('wpcf7_before_send_mail', 'dd_before_send_mail');
+function dd_before_send_mail($contact_form)
+{
     // Get the instance
-    $submission = WPCF7_Submission :: get_instance();
-    if ($submission){
+    $submission = WPCF7_Submission:: get_instance();
+    if ($submission) {
         $fields = $submission->get_posted_data();
         // put your field name in for [your-field]
-        $url=$fields['url-809'];
+        $url = $fields['url-809'];
+        $shortUrl = shortener($url);
 
-            $contact_form -> set_properties(array('messages' => array('mail_sent_ok' => $url)));
+        $contact_form->set_properties(array('messages' => array('mail_sent_ok' => $shortUrl)));
 
     }
+}
+
+function createTableWP_urls()
+{
+    global $wpdb;
+    $charsetCollate = $wpdb->get_charset_collate();
+    $urlTable = $wpdb->prefix . 'urls';
+    $createUrlTable = "CREATE TABLE IF NOT EXISTS `{$urlTable}` (
+            `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `url` varchar(1000) NOT NULL,
+            `shorturl` varchar(255) NOT NULL,
+            PRIMARY KEY (`id`)
+        ) {$charsetCollate};";
+    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    dbDelta($createUrlTable);
+}
+
+add_action('init', 'createTableWP_urls');
+
+function shortener($url)
+{
+    $return_url = short_url($url);
+    return '263.test/s/?url=' . $return_url;
+}
+
+function short_url($url)
+{
+    global $wpdb;
+
+    $conn = new mysqli('localhost', 'root', 'password', 'database_263');
+    if ($conn->connect_error) {
+        die("Conn failed");
+    }
+    $sql = "SELECT * FROM wp_urls WHERE url='$url';";
+
+    $rs = mysqli_query($conn, $sql);
+    $getRes = mysqli_fetch_assoc($rs);
+////    $table = $wpdb->prefix . 'urls';
+////    $sql = "SELECT * FROM {$table} WHERE `url` = d";
+////    $row = $wpdb->get_row($wpdb->prepare($sql, $url), ARRAY_A);
+//    print_r($row);
+    if (!empty($getRes)) {
+        return $getRes['shorturl'];
+    } else {
+        $shortUrl = getRandomSlug(5);
+        //insert data in database
+        $data = array(
+            'url' => $url,
+            'shorturl' => $shortUrl,
+        );
+        $table = $wpdb->prefix . 'urls';
+        $wpdb->insert(
+            $table,
+            $data
+        );
+        $wpdb->insert_id;
+        return $shortUrl;
+    }
+}
+
+function getRandomSlug($length)
+{
+    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $characterLength = strlen($characters);
+    $randomString = '';
+
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $characterLength - 1)];
+    }
+    return $randomString;
 }
 
 
