@@ -506,7 +506,7 @@ add_action('init', 'createTableWP_urls');
 function shortener($url)
 {
     $return_url = short_url($url);
-    return '263.test/s/?url=' . $return_url;
+    return get_home_url().'/s/?url=' . $return_url;
 }
 
 function short_url($url)
