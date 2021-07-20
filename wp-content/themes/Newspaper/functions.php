@@ -513,20 +513,12 @@ function short_url($url)
 {
     global $wpdb;
 
-    $conn = new mysqli('localhost', 'root', 'password', 'database_263');
-    if ($conn->connect_error) {
-        die("Conn failed");
-    }
-    $sql = "SELECT * FROM wp_urls WHERE url='$url';";
+    $table = $wpdb->prefix . 'urls';
+    $sql = "SELECT * FROM {$table} WHERE `url` = %s";
+    $row = $wpdb->get_row($wpdb->prepare($sql, $url), ARRAY_A);
 
-    $rs = mysqli_query($conn, $sql);
-    $getRes = mysqli_fetch_assoc($rs);
-////    $table = $wpdb->prefix . 'urls';
-////    $sql = "SELECT * FROM {$table} WHERE `url` = d";
-////    $row = $wpdb->get_row($wpdb->prepare($sql, $url), ARRAY_A);
-//    print_r($row);
-    if (!empty($getRes)) {
-        return $getRes['shorturl'];
+    if (!empty($row)) {
+        return $row['shorturl'];
     } else {
         $shortUrl = getRandomSlug(5);
         //insert data in database

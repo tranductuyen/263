@@ -8,25 +8,19 @@
  */
 
 
-//foreach (explode('/', $_SERVER['REQUEST_URI']) as $part) {
-//    $elem = $part;
-//}
 if (isset($_GET['url']) && $_GET['url'] != null) {
     $elem = $_GET['url'];
 } else {
     $elm = null;
 }
 
-$conn = new mysqli('localhost', 'root', 'password', 'database_263');
-if ($conn->connect_error) {
-    die("Conn failed");
-}
-$sql = "SELECT * FROM wp_urls WHERE shorturl='$elem';";
+global $wpdb;
 
-$rs = mysqli_query($conn, $sql);
-$getRes = mysqli_fetch_assoc($rs);
+$table = $wpdb->prefix . 'urls';
+$sql = "SELECT * FROM {$table} WHERE `shorturl` = %s";
+$row = $wpdb->get_row($wpdb->prepare($sql, $elem), ARRAY_A);
+$url = $row['url'];
 
-$url = $getRes['url'];
 header("Location: $url");
-$conn->close();
+
 die();
