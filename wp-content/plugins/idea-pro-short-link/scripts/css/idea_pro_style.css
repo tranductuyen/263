@@ -1,0 +1,57 @@
+#idea_pro_short_link_submit {
+    width: 100% !important;
+    height: 34px;
+    background-color: #0d1682;
+    color:#FFFFFF;
+    border:none
+}
+#idea_pro_short_link_submit:hover{
+    background:#0d66c2;
+}
+
+#idea_pro_short_link_copy:hover{
+    background:#0d66c2;
+}
+
+
+
+#idea_pro_short_link_copy {
+    width: 100% !important;
+    height: 34px;
+    background-color: #0d1682;
+    color:#FFFFFF;
+    border:none
+}
+
+.idea_pro_short_link_copy_detail {
+    width: 100% !important;
+    height: 34px;
+    background-color: #edf2fe;
+    border:none
+}
+#btn_copy{
+    padding-left: 0px !important;
+    margin-left: 0px !important;
+}
+
+.idea_pro_short_link_copy_detail:hover{
+    background:#0d66c2;
+}
+
+.long_link {
+    height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.short_link {
+    text-align: right;
+    padding-right: 0px;
+    margin-right: 0px;
+}
+
+#url{
+    font-size: 16px;
+    color:#2a5bd7;
+}

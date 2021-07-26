@@ -451,23 +451,6 @@ function td_filter_youtube_embed( $block_content, $block ) {
 
 
 
-//add_action('wpcf7_mail_sent', 'after_sent_mail');
-//
-//function after_sent_mail($contact_form){
-//    $title=$contact_form->title;
-//    if($title==='ShortLinkForm'){
-//        $submission = WPCF7_Submission::get_instance();
-//        if($submission){
-//            $posted_data=$submission->get_posted_data();
-//            $url=$posted_data['url-809'];
-//            print_r($submission);
-//            exit;
-//        }
-//    }
-//}
-
-
-
 //edit response after submit contact form 7
 
 add_action('wpcf7_before_send_mail', 'dd_before_send_mail');
