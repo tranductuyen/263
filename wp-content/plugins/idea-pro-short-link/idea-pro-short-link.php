@@ -15,7 +15,7 @@ define('IDEA_PRO_MINIMUM_WP_VERSION', '1.0.0');
 define('IDEA_PRO_SHORT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('IDEA_PRO_SHORT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
-session_start();
+require('admin-menu.php');
 
 function idea_pro_short_link_form()
 {
@@ -29,7 +29,7 @@ function idea_pro_short_link_form()
 
     $content .= '</div>';
 
-    $content .= '<p style="color: red" class="errors"></p>';
+    $content .= '<p id="errors"></p>';
     $content .= '<div id="here_table">';
     $content .= '</div>';
 
@@ -67,14 +67,13 @@ function shorten()
     $urls['long_url'] = $long_url;
 
     $json['urls'] = $urls;
-//    $json['content'] = $content;
     wp_send_json_success($json);
 
 }
 
 function do_short_url($url)
 {
-    $return_url = short_url($url);
+    $return_url = short_url_db($url);
 
     return get_home_url() . '/s/?url=' . $return_url;
 

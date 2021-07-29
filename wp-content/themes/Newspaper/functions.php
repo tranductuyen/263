@@ -451,23 +451,7 @@ function td_filter_youtube_embed( $block_content, $block ) {
 
 
 
-//edit response after submit contact form 7
-
-add_action('wpcf7_before_send_mail', 'dd_before_send_mail');
-function dd_before_send_mail($contact_form)
-{
-    // Get the instance
-    $submission = WPCF7_Submission:: get_instance();
-    if ($submission) {
-        $fields = $submission->get_posted_data();
-        // put your field name in for [your-field]
-        $url = $fields['url-809'];
-        $shortUrl = shortener($url);
-
-        $contact_form->set_properties(array('messages' => array('mail_sent_ok' => $shortUrl)));
-
-    }
-}
+// Insert to database
 
 function createTableWP_urls()
 {
@@ -478,6 +462,7 @@ function createTableWP_urls()
             `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
             `url` varchar(1000) NOT NULL,
             `shorturl` varchar(255) NOT NULL,
+            `counter` int NOT NULL,
             PRIMARY KEY (`id`)
         ) {$charsetCollate};";
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -486,50 +471,6 @@ function createTableWP_urls()
 
 add_action('init', 'createTableWP_urls');
 
-function shortener($url)
-{
-    $return_url = short_url($url);
-    return get_home_url().'/s/?url=' . $return_url;
-}
-
-function short_url($url)
-{
-    global $wpdb;
-
-    $table = $wpdb->prefix . 'urls';
-    $sql = "SELECT * FROM {$table} WHERE `url` = %s";
-    $row = $wpdb->get_row($wpdb->prepare($sql, $url), ARRAY_A);
-
-    if (!empty($row)) {
-        return $row['shorturl'];
-    } else {
-        $shortUrl = getRandomSlug(5);
-        //insert data in database
-        $data = array(
-            'url' => $url,
-            'shorturl' => $shortUrl,
-        );
-        $table = $wpdb->prefix . 'urls';
-        $wpdb->insert(
-            $table,
-            $data
-        );
-        $wpdb->insert_id;
-        return $shortUrl;
-    }
-}
-
-function getRandomSlug($length)
-{
-    $characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    $characterLength = strlen($characters);
-    $randomString = '';
-
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $characterLength - 1)];
-    }
-    return $randomString;
-}
 
 
 

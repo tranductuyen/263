@@ -1,18 +1,28 @@
 function submit_short_link_form() {
 
-    $('.errors').html("");
+    $('#errors').html("");
 
     var long_url = $('input[name="url"]').val();
 
-    if (long_url.length == 0) {
-        $('.errors').html("Please, provide a valid url.");
+    if (long_url.length === 0) {
+        $('#errors').addClass("errors");
+        $('#errors').html("Please, provide a valid url.");
+        setTimeout(function(){
+            $('#errors').html("");
+            $('#errors').removeClass("errors");
+        },5000);
         return false;
     }
 
     const URL_REGEXP = new RegExp("^(http|https|ftp)://", "i");
 
     if (!validURL(long_url)) {
-        $('.errors').html("Unable to shorten that link. It is not a valid url.");
+        $('#errors').addClass("errors");
+        $('#errors').html("Unable to shorten that link. It is not a valid url.");
+        setTimeout(function(){
+            $('#errors').html("");
+            $('#errors').removeClass("errors");
+        },5000);
         return false;
     }
     ;

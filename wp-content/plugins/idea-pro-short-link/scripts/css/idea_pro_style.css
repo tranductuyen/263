@@ -3,7 +3,8 @@
     height: 34px;
     background-color: #0d1682;
     color:#FFFFFF;
-    border:none
+    border:none;
+    margin-top:5px
 }
 #idea_pro_short_link_submit:hover{
     background:#0d66c2;
@@ -20,22 +21,20 @@
     height: 34px;
     background-color: #0d1682;
     color:#FFFFFF;
-    border:none
+    border:none;
+    margin-top:5px
 }
 
 .idea_pro_short_link_copy_detail {
     width: 100% !important;
     height: 34px;
     background-color: #edf2fe;
-    border:none
-}
-#btn_copy{
-    padding-left: 0px !important;
-    margin-left: 0px !important;
+    border:none;
+    color:#2a5bd7;
 }
 
 .idea_pro_short_link_copy_detail:hover{
-    background:#0d66c2;
+    background:#cedafa;
 }
 
 .long_link {
@@ -49,9 +48,20 @@
     text-align: right;
     padding-right: 0px;
     margin-right: 0px;
+    color:#2a5bd7;
 }
 
 #url{
     font-size: 16px;
     color:#2a5bd7;
+    margin-top:5px;
+}
+.errors{
+    height:30px;
+    text-align:center;
+    font-size: 16px;
+    background-color:#fa9b93;
+    margin-top: 7px;
+    color:red;
+    border-radius:2px;
 }
