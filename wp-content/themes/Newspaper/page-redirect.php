@@ -2,9 +2,6 @@
 /**
  * Template Name: Redirect Short Link
  *
- * @package WordPress
- * @subpackage Twenty_Fourteen
- * @since Twenty Fourteen 1.0
  */
 
 
